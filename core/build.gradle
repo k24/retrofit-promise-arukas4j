@@ -1,0 +1,41 @@
+group 'com.github.k24'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    maven { url "https://www.jitpack.io" }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.github.k24:retrofit-converter-jsonic:1.0.0'
+    testCompile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    testCompile 'com.squareup.retrofit2:retrofit-mock:2.2.0'
+    testCompile 'org.assertj:assertj-core:2.6.0'
+    testCompile 'com.github.k24.deferred:deferred-rxjava2:1.1.0'
+    testCompile 'com.github.k24.deferred:deferred-assert:1.1.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+    compile 'com.github.k24:retrofit-promise-adapter:1.3.0'
+}
+
+// http://stackoverflow.com/a/33026919
+task createProperties(dependsOn: processResources) << {
+    def props = file("$buildDir/resources/main/version.properties")
+    props.getParentFile().mkdirs()
+    props.withWriter { w ->
+        Properties p = new Properties()
+        p['version'] = project.version.toString()
+        p.store w, null
+    }
+}
+
+classes {
+    dependsOn createProperties
+}
+

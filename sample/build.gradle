@@ -1,0 +1,34 @@
+group 'com.github.k24'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    maven { url "https://www.jitpack.io" }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+
+    compile project(':retrofit-promise-arukas4j')
+    compile 'com.github.k24:retrofit-converter-jsonic:1.0.0'
+    compile 'com.github.k24.deferred:deferred-rxjava2:1.0.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+}
+
+apply plugin: 'application'
+mainClassName = 'com.github.k24.arukas4j.Arukas4jSample'
+
+// ./gradlew :sample:run --offline -Pargs="YourAPIToken YourAPISecret"
+run {
+    if (project.hasProperty('args')) {
+        args(project.args.split('\\s+'))
+    }
+    if (project.hasProperty('debug')) {
+        // If AES256 is ignored, install Java Cryptography Extension (JCE) Unlimited Strength for your JDK.
+        jvmArgs('-Djavax.net.debug=ssl')
+    }
+}

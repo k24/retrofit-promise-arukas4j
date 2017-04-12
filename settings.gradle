@@ -1,0 +1,5 @@
+rootProject.name = 'retrofit-promise-arukas4j'
+include 'core'
+findProject(':core')?.name = 'retrofit-promise-arukas4j'
+include 'sample'
+
